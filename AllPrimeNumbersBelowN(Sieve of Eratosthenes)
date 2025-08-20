@@ -52,7 +52,7 @@ public class FindAllPrimesBelowN {
 		for (int i = 2; i <= n; i++) {
 			if (primes[i] == true) {
 				// mark multiple of numbers from 2 to n as false
-				// here no need to check all numbers multplied 3. we can check first unmarked
+				// here no need to check all numbers multplied by 2. we can check first unmarked
 				// multiple of i .So its i*i
 				for (int j = i * i; j <= n; j = j + i) {
 					primes[j] = false;
