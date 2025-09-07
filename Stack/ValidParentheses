@@ -1,0 +1,31 @@
+package com.stack;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
+public class ValidParentheses {
+	public static void main(String[] args) {
+		String s = "())";
+		System.out.println(isValid(s));
+	}
+
+	public static boolean isValid(String s) {
+		Stack<Character> st = new Stack();
+		for (char ch : s.toCharArray()) {
+			System.out.println("char" + ch);
+			if (!st.isEmpty() && check(st.peek(), ch)) {
+				st.pop();
+			} else {
+				st.push(ch);
+			}
+		}
+
+		return st.size() == 0;
+	}
+
+	public static boolean check(char open, char close) {
+		System.out.println("open:" + open + "  " + "close:" + close);
+		return (open == '(' && close == ')') || (open == '[' && close == ']') || (open == '{' && close == '}');
+	}
+}
