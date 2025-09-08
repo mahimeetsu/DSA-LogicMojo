@@ -1,0 +1,84 @@
+Q)Given the head of a singly linked list, return the middle node of the linked list.
+If there are two middle nodes, return the second middle node.
+Example 1:
+Input: head = [1,2,3,4,5]
+Output: [3,4,5]
+Explanation: The middle node of the list is node 3.
+
+Example 2:
+Input: head = [1,2,3,4,5,6]
+Output: [4,5,6]
+Explanation: Since the list has two middle nodes with values 3 and 4, we return the second one.
+
+=====================================================================
+
+# Intuition
+<!-- Describe your first thoughts on how to solve this problem. -->
+
+# Approach
+<!-- Describe your approach to solving the problem. -->
+
+# Complexity
+- Time complexity:
+<!-- Add your time complexity here, e.g. $$O(n)$$ -->
+
+- Space complexity:
+<!-- Add your space complexity here, e.g. $$O(n)$$ -->
+
+# Code
+```java []
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        int c=0;
+        ListNode temp=head;
+        while(temp!=null)
+        {
+            System.out.println(temp.val);
+            temp=temp.next;
+            c++;
+        }
+        System.out.println("count:"+c);
+
+        ListNode temp1=head;
+        int i=0;
+       while(temp1!=null&&i<c/2)
+       {
+        temp1=temp1.next;
+        i++;
+       }
+        return temp1;
+    }
+}
+======================================================================
+    /**
+    * Definition for singly-linked list.
+    * public class ListNode {
+    *     int val;
+    *     ListNode next;
+    *     ListNode() {}
+    *     ListNode(int val) { this.val = val; }
+    *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+    * }
+    */
+    class Solution {
+        public ListNode middleNode(ListNode head) {
+    ListNode slow=head;
+    ListNode fast=head;
+    while(fast!=null&&fast.next!=null)
+    {
+        slow=slow.next;
+        fast=fast.next.next;
+    }
+    return slow;
+        }
+    }
