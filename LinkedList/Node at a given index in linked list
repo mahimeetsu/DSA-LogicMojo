@@ -1,0 +1,30 @@
+Q)Given the head of a Singly Linked List and an index, The task is to find the node at the given index(1-based index) of the linked list. 
+  If no such index exists then return -1.
+
+/*node class of the linked list
+class Node
+{
+    int data;
+    Node next;
+    Node(int key)
+    {
+        data = key;
+        next = null;
+    }
+}
+*/
+
+class Solution {
+    public int GetNth(Node head, int index) {
+   int c = 1;
+		Node temp = head;
+		while (temp != null && c < index) {
+			temp = temp.next;
+			c++;
+		}
+		if (temp != null)
+			return temp.data;
+		else
+			return -1;       
+    }
+}
