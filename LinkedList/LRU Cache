@@ -1,0 +1,119 @@
+class LRUCache {
+    //Node class :
+    /*This class represents doubly linked list.
+    Each node contains integer key,integer valye and pointers to the previous and next nodes in the linked list.
+    */
+
+    class Node
+    {
+        int key;
+        int val;
+        Node next;
+        Node prev;
+
+        Node(int key,int val)
+        {
+            this.key=key;
+            this.val=val;
+        }
+    }
+    //define head and tails with -1,-1 . These are two dummy nodes.
+    Node head=new Node(-1,-1);
+    Node tail=new Node(-1,-2);
+    int cap;
+    //map is used to store key as integer key and value as reference of the node
+    Map<Integer,Node> map=new HashMap<>();
+    public LRUCache(int capacity) {
+        cap=capacity;
+        head.next=tail;
+        tail.prev=head;
+    }
+    /*
+This function is used to retrieve a value from the cache based on the given key.
+If the key exists in the cache (m.find(key) != m.end()), it retrieves the corresponding node (resNode), extracts its value (ans), and performs the following steps:
+Erase the key-value pair from the m unordered map.
+Delete the node from its current position in the linked list using deleteNode.
+Add the node to the front of the linked list using addNode, making it the most recently used node.
+Update the m map to store the key with the most recently used node.
+If the key doesn't exist in the cache, it returns -1.
+    */
+    public int get(int key) {
+        if(map.containsKey(key))
+        {
+            Node resNode=map.get(key);
+            int ans=resNode.val;
+            //remove least recently used from the map from last
+            map.remove(key);
+            deleteNode(resNode);
+            //again add least recently used to map at the front
+            addNode(resNode);
+            map.put(key,head.next);
+            return ans;
+        }
+        return -1;
+    }
+
+    /*
+    This function is used to insert or update a key-value pair in the cache.
+If the key already exists in the cache, it updates the value by performing the following steps:
+Erase the existing key-value pair from the m unordered map.
+Delete the corresponding node from its current position in the linked list using deleteNode.
+If the cache is full (i.e., m.size() == cap), it removes the least recently used node from the cache by erasing the key-value pair from the m map and deleting the node from the end of the linked list using deleteNode.
+After handling the eviction (if needed), it creates a new node using new Node(key, value) and adds it to the front of the linked list using addNode.
+Finally, it updates the m map to store the key with the newly added node.
+    */
+    public void put(int key, int value) {
+            //if map already contains key,remove it
+            if(map.containsKey(key))
+            {
+                Node curr=map.get(key);
+                map.remove(key);
+                deleteNode(curr);
+            }
+            //if size is full,then remove last key
+            if(map.size()==cap)
+            {
+                map.remove(tail.prev.key);
+                deleteNode(tail.prev);
+            }
+
+            //add new key at the front
+            addNode(new Node(key,value));
+            map.put(key,head.next);
+    }
+/*
+This function is used to add a new node to the front of the doubly linked list (right after head).
+It takes a Node* newnode as input, representing the node to be added.
+The function updates the pointers of the new node, the previous first node, and head to include the new node as the new first node.
+*/
+    public void addNode(Node newNode)
+    {
+        Node temp=head.next;
+
+        newNode.next=temp;
+        newNode.prev=head;
+        
+        head.next=newNode;
+        temp.prev=newNode;
+    }
+/*
+This function is used to delete a node from the doubly linked list.
+It takes a Node* delnode as input, representing the node to be deleted.
+The function updates the pointers of the previous and next nodes to exclude the node to be deleted, effectively removing it from the linked list.
+*/
+    public void deleteNode(Node delNode)
+    {
+        Node prevv=delNode.prev;
+        Node nextt=delNode.next;
+
+        prevv.next=nextt;
+        nextt.prev=prevv;
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
