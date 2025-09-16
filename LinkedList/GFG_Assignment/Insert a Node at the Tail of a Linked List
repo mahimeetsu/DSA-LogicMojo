@@ -1,0 +1,41 @@
+/*Sample Input
+
+STDIN   Function
+-----   --------
+5       size of linked list n = 5
+141     linked list data values 141..474
+302
+164
+530
+474
+Sample Output
+
+141
+302
+164
+530
+474
+*/
+
+    static SinglyLinkedListNode insertNodeAtTail(SinglyLinkedListNode head, int data) {
+        SinglyLinkedListNode newNode=new SinglyLinkedListNode(data);
+            
+        //if head is empty, the newNode becomes head
+        if(head==null)
+        {
+            return newNode;
+        }
+        
+        SinglyLinkedListNode temp=head;
+        //traverse the head till reached to end
+        while(temp.next!=null)
+        {
+            temp=temp.next;
+        }
+        
+        //now link the newNode to temp(at the last)
+        temp.next=newNode;
+        
+        return head;
+
+    }
