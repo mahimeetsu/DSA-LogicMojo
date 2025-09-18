@@ -1,0 +1,78 @@
+
+bruteforce:
+
+/*
+class Node {
+    int data;
+    Node next;
+    Node bottom;
+
+    Node(int x) {
+        data = x;
+        next = null;
+        bottom = null;
+    }
+}
+*/
+class Solution {
+    public Node flatten(Node root) {
+        List<Integer> list=new ArrayList<>();
+        while(root!=null)
+        {
+            //traverse through the child nodes of each head node
+            Node temp=root;
+            while(temp!=null)
+            {
+                //store each child nodes data into list
+                list.add(temp.data);
+                //move to next child node
+                temp=temp.bottom;
+            }
+            //once all child nodes are completed, then move to next root node
+            root=root.next;
+         }
+            //sort arraylist in ascending order
+            Collections.sort(list);
+            //convefrt sorted arraylist back to linkedlist
+            return convertArrayListToLinkedList(list);
+            }
+    
+    public Node convertArrayListToLinkedList(List<Integer> list)
+    {
+        //create a dummy node to serve as a head node
+        Node dummyNode=new Node(-1);
+        Node temp=dummyNode;
+        
+        //iterate list and create nodes with elements
+        for(int i=0;i<list.size();i++)
+        {
+            temp.bottom=new Node(list.get(i));
+            //move temp pointer to the newly created node
+            temp=temp.bottom;
+        }
+        
+        //return the linkedlist starting from the next of the dummy node
+        return dummyNode.bottom;
+    }
+    
+}
+
+
+Time Complexity: O(N*M) + O(N*M log(N*M)) + O(N*M)where N is the length of the linked list along the next pointer and M is the length of the linked list along the child pointer.
+
+O(N*M) as we traverse through all the elements, iterating through ‘N’ nodes along the next pointer and ‘M’ nodes along the child pointer.
+O(N*M log(N*M)) as we sort the array containing N*M (total) elements.
+O(N*M) as we reconstruct the linked list from the sorted array by iterating over the N*M elements of the array.
+Space Complexity : O(N*M) + O(N*M)where N is the length of the linked list along the next pointer and M is the length of the linked list along the child pointer.
+
+O(N*M) for storing all the elements in an additional array for sorting.
+O(N*M) to reconstruct the linked list from the array after sorting
+
+
+
+======================================
+
+
+
+Optmial:
+
