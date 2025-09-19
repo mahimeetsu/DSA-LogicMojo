@@ -1,0 +1,51 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if(head==null||head.next==null)
+        return false;
+        ListNode temp=head;
+        List<ListNode> list=new ArrayList<>();
+        while(temp!=null)
+        {
+            if(list.contains(temp))
+            return true;
+            list.add(temp);
+            temp=temp.next;
+        }
+        return false;
+    }
+}
+Time Complexity: O(n) — Each node is visited once.
+Space Complexity: O(n) — To store visited nodes.
+
+=============
+
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if(head==null||head.next==null)
+        return false;
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null&&fast.next!=null)
+        {
+            slow=slow.next;
+            fast=fast.next.next;
+            if(slow==fast)
+                return true;            
+        }
+        return false;
+    }
+}
+
+Time Complexity: O(n) — In the worst-case scenario, each node is visited once.
+Space Complexity: O(1) — Constant space is used.
