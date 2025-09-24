@@ -1,0 +1,47 @@
+package com.string;
+
+import java.util.Stack;
+
+public class MinimumNumberofSwapsStringBalanced {
+	public static void main(String[] args) {
+		String s = "]]][[[";
+		// []][][ // swap index 0 with index 4
+		// [[][]] //swap 1 and 5 indexes
+		System.out.println(minSwaps(s));
+		System.out.println(minSwapsOptimal(s));
+
+	}
+
+	public static int minSwaps(String s) {
+		int mismatch = 0;
+		Stack<Character> st = new Stack<>();
+		for (char c : s.toCharArray()) {
+			if (c == '[') {
+				st.push(c);
+			} else {
+				if (!st.isEmpty()) {
+					st.pop();
+				} else {
+					mismatch++;
+				}
+			}
+		}
+		return (mismatch + 1) / 2;
+	}
+
+	public static int minSwapsOptimal(String s) {
+		int stackSize = 0;
+		Stack<Character> st = new Stack<>();
+		for (char c : s.toCharArray()) {
+			if (c == '[') {
+				stackSize++;
+			} else {
+				if (stackSize > 0) {
+					stackSize--;
+				}
+			}
+
+		}
+		return (stackSize + 1) / 2;
+	}
+}
