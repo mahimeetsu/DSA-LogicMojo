@@ -1,0 +1,15 @@
+class Solution {
+    public ArrayList<Integer> preorder(Node root) {
+    ArrayList<Integer> list=new ArrayList<>();
+    helper(root,list);
+    return list;
+    }
+    public void helper(Node root,List<Integer> list)
+    {
+    if(root==null)
+        return;
+    list.add(root.data);
+    helper(root.left,list);
+    helper(root.right,list);
+    }
+}
