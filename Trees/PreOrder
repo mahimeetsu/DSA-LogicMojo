@@ -1,3 +1,7 @@
+/*
+Time Complexity: O(n)
+Auxiliary Space: O(h), h is the height of the tree
+*/
 class Solution {
     public ArrayList<Integer> preorder(Node root) {
     ArrayList<Integer> list=new ArrayList<>();
