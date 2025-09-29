@@ -1,0 +1,40 @@
+package com.string;
+
+import java.util.Arrays;
+
+public class Anagrams {
+	public static void main(String[] args) {
+		String s1 = "geeks", s2 = "kseeg";
+		// System.out.println(areAnagrams(s1, s2));
+		System.out.println(areAnagramsOptimal(s1, s2));
+
+	}
+
+	public static boolean areAnagrams(String s1, String s2) {
+		char s3[] = s1.toCharArray();
+		char s4[] = s2.toCharArray();
+		Arrays.sort(s3);
+		Arrays.sort(s4);
+		return Arrays.equals(s3, s4);
+	}
+
+	public static boolean areAnagramsOptimal(String s1, String s2) {
+		char s3[] = s1.toCharArray();
+		char s4[] = s2.toCharArray();
+		int ch[] = new int[26];
+		for (char c : s3) {
+			ch[c - 'a']++;
+		}
+		System.out.println(Arrays.toString(ch));
+		for (char c : s4) {
+			ch[c - 'a']--;
+		}
+		for (int i : ch) {
+			if (i != 0)
+				return false;
+		}
+		System.out.println(Arrays.toString(ch));
+		return true;
+	}
+
+}
