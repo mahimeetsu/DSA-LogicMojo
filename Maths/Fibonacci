@@ -1,0 +1,19 @@
+package com.dsa.maths;
+
+public class Fibonacci {
+	public static void main(String[] args) {
+		int n=50;
+		
+		int a=0,b=1,c;
+		c=a+b;
+		System.out.print(a+" "+b);
+		
+		while(c<=n)
+		{
+			System.out.print(" "+c);
+			a=b;
+			b=c;
+			c=a+b;
+		}		
+	}
+}
