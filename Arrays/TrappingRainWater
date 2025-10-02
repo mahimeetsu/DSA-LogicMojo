@@ -1,0 +1,49 @@
+//[Naive Approach] Brute Force - O(n^2) Time and O(1) Space
+class Solution {
+    public int trap(int[] height) {
+        //calculate number of units of water at every index.
+        //findout max element of index i at left side and max element at right side
+        //find out min of (max element leftside,max element rightside)
+        //substract current value at index i from min of (max element leftside,max element rightside)
+        //Example: for index 5(value 0), max element leftside 2
+        //                               max element rightside 3
+        //                               min of (2,3)=2
+        //                               substract 0 from 2 i.e 2-0=2
+        //we need to use nested loops to find out left max and right max
+        //to find left max will iterate from i-1 to 0
+        //to find right max will iterate from i+1 to n
+        int maxwater=0,n=height.length;
+        for(int i=1;i<n;i++)
+        {
+            int lmax=height[i];
+            for(int j=0;j<i;j++)
+            {
+                lmax=Math.max(lmax,height[j]);
+            }
+            int rmax=height[i];
+            for(int j=i+1;j<n;j++)
+            {
+                rmax=Math.max(rmax,height[j]);
+            }
+            maxwater=maxwater+(Math.min(lmax,rmax)-height[i]);
+        }
+        return maxwater;
+    }
+}
+
+
+[Expected Approach] Using Two Pointers - O(n) Time and O(1) Space
+
+class Solution {
+    public int trap(int[] height) {
+    int left=0,right=height.length-1,lmax=Integer.MIN_VALUE,rmax=Integer.MIN_VALUE;
+    int maxwater=0;
+    while(left<=right)
+    {
+        lmax=Math.max(lmax,height[left]);
+        rmax=Math.max(rmax,height[right]);
+        maxwater+=(lmax<rmax)?(lmax-height[left++]):(rmax-height[right--]);
+    }
+    return maxwater;
+    }
+}
