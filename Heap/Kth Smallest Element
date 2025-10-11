@@ -1,0 +1,55 @@
+Kth Smallest:
+Given an array arr[] and an integer k where k is smaller than the size of the array, your task is to find the kth smallest element in the given array.
+
+Follow up: Don't solve it using the inbuilt sort function.
+
+Examples :
+
+Input: arr[] = [7, 10, 4, 3, 20, 15], k = 3
+Output: 7
+Explanation: 3rd smallest element in the given array is 7.
+Input: arr[] = [2, 3, 1, 20, 15], k = 4 
+Output: 15
+Explanation: 4th smallest element in the given array is 15.
+
+=================
+
+// User function Template for Java
+
+class Solution {
+    public static int kthSmallest(int[] arr, int k) {
+        Arrays.sort(arr);
+        
+        return arr[0+k-1];
+    }
+}
+Time Complexity : O(n * log(n)), where 'n' is the number of elements in the input array . This is because we sorted the array .
+Space Complexity : O(1), As we are using constant extra space.
+==================
+
+// User function Template for Java
+//We can also use min heap (priority queue ) to find kth smallest element
+
+class Solution {
+    public static int kthSmallest(int[] arr, int k) {
+        PriorityQueue<Integer> pq=new PriorityQueue<>(Collections.reverseOrder());
+        
+        for(int n:arr)
+        {
+            pq.add(n);
+            
+            if(pq.size()>k)
+            {
+                pq.poll();
+            }
+        }
+        
+        return pq.peek();
+    }
+}
+
+
+Time Complexity : O(n * log(k)), where 'n' is the number of elements in the input array. This is because for each element in the array, 
+you perform operations on the max heap (addition and potentially removal), and both of these operations have a time complexity of O(log(k)).
+Space Complexity : O(k), because the max heap is maintained with a maximum size of 'k'.
+
