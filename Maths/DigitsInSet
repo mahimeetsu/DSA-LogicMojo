@@ -1,0 +1,39 @@
+Digits in a set
+
+Given a number n, count the numbers from 1 to n, which comprise only digits from set {1, 2, 3, 4, 5}.
+
+Examples:
+
+Input: n = 20
+Output: 10
+Explanation: The numbers whose digits are from the given set are: 1, 2, 3, 4, 5, 11, 12, 13, 14, 15.
+Input: n = 100
+Output: 30
+
+
+// User function Template for Java
+
+class Solution {
+    public int countNumbers(int n) {
+    	int count = 0;
+
+		for (int i = 1; i <= n; i++) {
+			if (check(i)) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
+	public boolean check(int n) {
+		while (n > 0) {
+			if (n % 10 == 0 || n % 10 > 5) {
+				return false;
+			}
+			n = n / 10;
+		}
+		return true;
+
+	}
+}
