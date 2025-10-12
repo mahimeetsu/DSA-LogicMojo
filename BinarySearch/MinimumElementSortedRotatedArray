@@ -1,0 +1,28 @@
+package com.binaryserach;
+
+public class MinimumElementSortedRotatedArray {
+	public static void main(String[] args) {
+		int a[] = { 41, 55, 75, 28 };
+		System.out.println(findMin(a));
+	}
+
+	public static int findMin(int[] arr) {
+		int n = arr.length;
+		int low = 0, high = n - 1;
+		int ans = Integer.MAX_VALUE;
+		if (arr[low] < arr[high])
+			return arr[low];
+		while (low <= high) {
+			int mid = low + (high - low) / 2;
+			System.out.println("arr[low]: " + arr[low] + " arr[mid]: " + arr[mid] + " arr[high]: " + arr[high]);
+			if (arr[low] <= arr[mid]) {
+				ans = Math.min(ans, arr[low]);
+				low = mid + 1;
+			} else {
+				ans = Math.min(ans, arr[mid]);
+				high = mid - 1;
+			}
+		}
+		return ans;
+	}
+}
