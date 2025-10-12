@@ -1,0 +1,60 @@
+package com.dsa;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.TreeMap;
+
+public class TopKElements {
+	public static void main(String[] args) {
+		int nums[] = { 4, 1, -1, 2, -1, 2, 3 }, k = 2;
+		// System.out.println(Arrays.toString(topKFrequent(nums, k)));
+		System.out.println(Arrays.toString(topKFrequentUsingPQ(nums, k)));
+	}
+
+	// O(NLOGN)
+	public static int[] topKFrequent(int[] nums, int k) {
+		int ans[] = new int[k];
+		int index = 0;
+		Map<Integer, Integer> freqMap = new TreeMap<>();
+		// o(n)
+		for (int n : nums) {
+			freqMap.put(n, freqMap.getOrDefault(n, 0) + 1);
+		}
+		System.out.println(freqMap);
+		// sort based on frequency i.e value
+		List<Integer> list = new ArrayList<>(freqMap.keySet());
+		// o(nlogn)
+		Collections.sort(list, (a, b) -> freqMap.get(b) - freqMap.get(a));
+		System.out.println(list);
+		// now transfer elements from list to ans array
+		// o(k)
+		for (int i = 0; i < k; i++) {
+			ans[i] = list.get(i);
+		}
+		return ans;
+	}
+	//in the first approach, sorting takign nlogn time, so we will try to avoid sorting using some datastructure i.e PQ
+	public static int[] topKFrequentUsingPQ(int[] nums, int k) {
+		int ans[] = new int[k];
+		int index = 0;
+		Map<Integer, Integer> freqMap = new TreeMap<>();
+		for (int n : nums) {
+			freqMap.put(n, freqMap.getOrDefault(n, 0) + 1);
+		}
+		System.out.println(freqMap);
+		PriorityQueue<Integer> pq = new PriorityQueue<Integer>((a, b) -> freqMap.get(b) - freqMap.get(a));
+		System.out.println(pq);
+		for (int n : freqMap.keySet()) {
+			pq.add(n);
+		}
+		System.out.println(pq);
+		for (int i = 0; i < k; i++) {
+			ans[i] = pq.poll();
+		}
+		return ans;
+	}
+}
