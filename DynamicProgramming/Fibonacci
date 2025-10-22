@@ -1,0 +1,60 @@
+package com.dp;
+import java.util.Arrays;
+public class Fibonacci {
+	public static void main(String[] args) {
+		int n = 5; // 0 1 1 2 3 5
+		System.out.println(fibonacciRecursion(n));
+		System.out.println(fibonacciMemoization(n));
+		System.out.println(fibonacciOptimal(n));
+	}
+
+	// TC :O(2^n)
+	// SC: O(n) (due to recursion stack)
+	public static int fibonacciRecursion(int n) {
+		// base case
+		if (n == 0 || n == 1)
+			return n;
+		// sum of two previous two fibonacci numbers
+		return fibonacciRecursion(n - 1) + fibonacciRecursion(n - 2);
+	}
+	// in previous recursion example, there is lot of redundant calculation that are
+	// calculating again and again . So we can
+	// store the results of previously computed Fibonacci number in a memo table to
+	// avoid reduntant calculations.This will make sure
+	// that each Fibonacii number is calculated only once and reduce exponential
+	// time complexity to more efficient o(n) TC.
+	public static int fibonacciMemoization(int n) {
+		// create a Memoization table with n+1, then initiaze with -1
+		int memo[] = new int[n + 1];
+		Arrays.fill(memo, -1);
+		return fibonacciMemoizationUtil(n, memo);
+	}
+	// TC:o(n). each fibonacci number is calcualted only once
+	// SC:o(n). due to memo table
+	private static int fibonacciMemoizationUtil(int n, int[] memo) {
+		// base case (0 or 1)
+		if (n <= 1)
+			return n;
+		if (memo[n] != -1) {
+			return memo[n];
+		}
+		// recursive case, calculate Fibonacci number and store in memo table
+		memo[n] = fibonacciMemoizationUtil(n - 1, memo) + fibonacciMemoizationUtil(n - 2, memo);
+		return memo[n];
+	}
+	// TC: o(n)
+	// SC: o(1)
+	public static int fibonacciOptimal(int n) {
+		if (n <= 1)
+			return n;
+		int curr = 0;
+		int prev1 = 1;
+		int prev2 = 0;
+		for (int i = 2; i <= n; i++) {
+			curr = prev1 + prev2;
+			prev2 = prev1;
+			prev1 = curr;
+		}
+		return curr;
+	}
+}
