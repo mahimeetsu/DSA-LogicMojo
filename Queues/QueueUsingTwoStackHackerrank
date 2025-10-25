@@ -1,0 +1,102 @@
+Sample Input
+
+STDIN   Function
+-----   --------
+10      q = 10 (number of queries)
+1 42    1st query, enqueue 42
+2       dequeue front element
+1 14    enqueue 42
+3       print the front element
+1 28    enqueue 28
+3       print the front element
+1 60    enqueue 60
+1 78    enqueue 78
+2       dequeue front element
+2       dequeue front element
+Sample Output
+
+14
+14
+Explanation
+
+Perform the following sequence of actions:
+
+Enqueue ; .
+Dequeue the value at the head of the queue, ; .
+Enqueue ; .
+Print the value at the head of the queue, ; .
+Enqueue ; .
+Print the value at the head of the queue, ; .
+Enqueue ; .
+Enqueue ; .
+Dequeue the value at the head of the queue, ; .
+Dequeue the value at the head of the queue, ; .
+
+===============
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+       Stack<Integer> st1=new Stack<>();
+       Stack<Integer> st2=new Stack<>();
+       
+       public void push(int x)
+       {
+        st1.push(x);
+       }
+       
+       public int pop()
+       {
+        if(st2.isEmpty())
+        {
+            while(!st1.isEmpty())
+            {
+                st2.push(st1.pop());
+            }
+        }
+        
+        return st2.pop();     
+
+       }
+       
+       public int peek()
+       {
+        if(st2.isEmpty())
+        {
+            while(!st1.isEmpty())
+            {
+                st2.push(st1.pop());
+            }
+        }
+        
+        return st2.peek();     
+
+       }
+       
+       
+    public static void main(String[] args) {
+       Solution s=new Solution();
+       Scanner sc=new Scanner(System.in);
+       int n=sc.nextInt();
+       
+       for(int i=0;i<n;i++)
+       {
+        int type=sc.nextInt();
+        
+        if(type==1)
+        {
+            int x=sc.nextInt();
+            s.push(x);
+        }
+        else if(type==2)
+        {
+s.pop();
+        }
+        else
+        {
+            System.out.println(s.peek());
+        }
+       }
+    }
+}
