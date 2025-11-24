@@ -1,0 +1,141 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> neighbors;
+    public Node() {
+        val = 0;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val) {
+        val = _val;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val, ArrayList<Node> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+}
+*/
+
+class Solution {
+    public Node cloneGraph(Node node) {
+        if(node==null)
+            return null;
+        Node copy=new Node(node.val);//create a new node, with same value as the root node
+        Node[] visited=new Node[101];//here we will create an array of type Node,but not type of boolean. because we have to add all the adjacent nodes of particular vertex, whether its visted or not,so in the Node[] initially null is stored,if if that is visted,we will store the respective node at the index,and then can retrieve that easily
+       // Arrays.fill(visited,null); //optional.because with above line it will be null
+        dfs(node,copy,visited);
+        return copy;
+    }
+
+    public Node dfs(Node node,Node copy,Node[] visited)
+    {
+        visited[copy.val]=copy;//store the current node at its val index which will tell us that this node visited
+       //now traverse for the adjacent nodes of root node
+       for(Node n:node.neighbors)
+       {
+        //check whether that node is visited or not,its it is not visited ,there must be null
+        if(visited[n.val]==null)
+        {
+            //so now its not visted, create a new node
+            Node newNode=new Node(n.val);
+            //add this node as the neighbor of the prev copied node
+            copy.neighbors.add(newNode);
+            //make dfs call for this unvisted node to discover whether its adjacent nodes are explored or not
+            dfs(n,newNode,visited);
+        }
+        else
+        {
+            //if that node is already visited,retrieve that node from visited array and add it as the adjacent node of prev copied node
+            //this is the point why we used Node[] instead of boolean[] array
+            copy.neighbors.add(visited[n.val]);
+        }
+       } 
+        return copy;
+    }
+}
+
+
+
+=========================================
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> neighbors;
+    public Node() {
+        val = 0;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val) {
+        val = _val;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val, ArrayList<Node> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+}
+*/
+
+class Solution {
+    public Node cloneGraph(Node node) {
+        if(node==null)
+            return null;
+        Map<Node,Node> visited=new HashMap<>();
+        return cloneGraphHelper(node,visited);
+    }
+
+    public Node cloneGraphHelper(Node node,Map<Node,Node> visited)
+    {
+        Node copy=new Node(node.val);
+        visited.put(node,copy);
+        for(Node neighbor:node.neighbors)
+        {
+            if(visited.containsKey(neighbor))
+            {
+                copy.neighbors.add(visited.get(neighbor));
+            }
+            else
+            {
+                Node neighborCopy=cloneGraphHelper(neighbor,visited);
+                copy.neighbors.add(neighborCopy);
+            }
+        }
+        return copy;
+    }
+}
+
+
+
+
+
+
+
+
+
+=====================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
