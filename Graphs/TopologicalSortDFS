@@ -1,0 +1,56 @@
+Topological Sorting
+-------------------
+
+Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices such that for every directed edge u→v, vertex u comes before v in the ordering. 
+There may be several topological orderings for a graph.
+
+Note: Topological Sorting for a graph is not possible if the graph is not a DAG.
+
+
+
+==========================================
+
+static void findTopo(int node,int vis[],ArrayList<ArrayList<Integer>> adj,Stack<Integer> st)
+{
+		vis[node]=1;
+		for(Integer it:adj.get(node))
+		{
+		if(vis[node]==0)
+			findTopo(node,vis,adj,st)
+		}
+		
+		//push the elements after visiting all its neighbours
+		st.push(node);
+
+
+}
+
+static ArrayList<Integer> topoSort(ArrayList<ArrayList<Integer>> adj)
+{
+	int n=adj.size();
+	Stack<Integer> st=new Stack<>();
+	int vis[]=new int[n];
+	
+	for(int i=0;i<n;i++)
+	{
+	if(vis[i]==0]
+	{
+	findTopo(i,vis,adj,st);
+	}
+	}
+	
+	ArrayList<Integer> topoList=new ArrayList<>();
+	//Popping elements from stack and pusing into list
+	while(!st.isEmpty())
+	{
+		topoList.add(st.pop());
+	}
+	return topoList;
+}
+
+
+
+=============================
+
+Time Complexity: O(V+E). We visited all the nodes, and all the neighbours of each node(i.e., all the edges).
+Auxiliary Space: O(V). For visited array, and for stack to store the topological order.
