@@ -1,0 +1,57 @@
+TopologicalSort Kahn's Algo(BFS):
+--------------------------------
+
+	We first compute the in degree of every vertex-representing how many incoming edges each vertex has.Then, all vertices with an indegree of 0 are added to a queue,as they can 
+appear first in the ordering.
+	We repeatedly remove a vertex from the queue, add it to our result list, and reduce the indegree for all its adjacent vertices.If any of those vertices have in degree 0, then 
+will add them into queue.
+	This process continues until the queue is empty.
+	
+=====================================================
+
+static ArrayList<Integer> topoSort(ArrayList<ArrayList<Integer>> adj)
+{
+int n=adj.size();
+int[] indegree=new int[n];
+Queue<Integer> queue=new LinkedList<>();
+ArrayList<Integer> ansList=new ArrayList<>();
+//compute indegree
+for(int i=0;i<n;i++)
+{
+	for(int next:adj.get(i))
+	{
+	indegree[next]++;
+	}
+}
+
+//Add all nodes with indegree 0 to the queue
+
+for(int i=0;i<n;i++)
+{
+	if(indegree[i]==0)
+		queue.add(i);
+}
+//kahn's alg (BFS)
+while(!q.isEmpty())
+{
+int top=queue.poll();
+result.add(top);
+for(int next.adj.get(top))
+{
+	indegree[next]--;
+	if(indegree[next]==0)
+		queue.add(next));
+}
+}
+return result;
+}
+
+============
+
+Time Complexity: O(V+E). For Performing BFS
+Auxiliary Space: O(V).
+	
+
+
+
+}
