@@ -8,50 +8,93 @@ will add them into queue.
 	This process continues until the queue is empty.
 	
 =====================================================
+package com.graph;
 
-static ArrayList<Integer> topoSort(ArrayList<ArrayList<Integer>> adj)
-{
-int n=adj.size();
-int[] indegree=new int[n];
-Queue<Integer> queue=new LinkedList<>();
-ArrayList<Integer> ansList=new ArrayList<>();
-//compute indegree
-for(int i=0;i<n;i++)
-{
-	for(int next:adj.get(i))
-	{
-	indegree[next]++;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+/*
+ * Time Complexity: O(V + E) because we visit each vertex exactly once and process all outgoing edges from each vertex exactly once.
+ * The in-degree calculation takes O(E), and each vertex is enqueued and dequeued exactly once in O(V). 
+ * Thus, total time is linear in the sum of vertices and edges.
+
+Space Complexity: O(V + E) because we store the adjacency list which takes O(E) space, the in-degree array which takes O(V), 
+the queue which can store up to O(V) vertices at a time, and the topological order array which takes O(V). Overall, 
+the space requirement is proportional to the size of the graph.
+ */
+public class TopoSortBFS {
+	public static void main(String[] args) {
+		// Number of vertices
+		int v = 6;
+
+		// create adjacency List
+		ArrayList<ArrayList<Integer>> adjList = new ArrayList<>();
+
+		for (int i = 0; i < v; i++) {
+			adjList.add(new ArrayList<Integer>());
+		}
+		System.out.println(adjList);
+		// adding edges
+		adjList.get(5).add(0);
+		adjList.get(5).add(2);
+		adjList.get(4).add(0);
+		adjList.get(4).add(1);
+		adjList.get(2).add(3);
+		adjList.get(3).add(1);
+
+		int[] ans = topoLogicalBFS(adjList, v);
+
+		// print ans
+		for (int i : ans) {
+			System.out.print(i + " ");
+		}
 	}
-}
 
-//Add all nodes with indegree 0 to the queue
+	private static int[] topoLogicalBFS(ArrayList<ArrayList<Integer>> adjList, int v) {
+		// create an array to store the indegree of each node
+		int[] indegree = new int[v];
 
-for(int i=0;i<n;i++)
-{
-	if(indegree[i]==0)
-		queue.add(i);
-}
-//kahn's alg (BFS)
-while(!q.isEmpty())
-{
-int top=queue.poll();
-result.add(top);
-for(int next.adj.get(top))
-{
-	indegree[next]--;
-	if(indegree[next]==0)
-		queue.add(next));
-}
-}
-return result;
-}
+		// loop over all vertices to calculate indegree
+		for (int i = 0; i < v; i++) {
+			for (int it : adjList.get(i)) {
+				// increase indegree of connected vertix
+				indegree[it]++;
+			}
+		}
 
-============
+		// create a Queue to store vertices with indegree 0
+		Queue<Integer> q = new LinkedList<>();
+		for (int i = 0; i < v; i++) {
+			// if indegree is 0, then add the verix to Queue
+			if (indegree[i] == 0)
+				q.add(i);
+		}
 
-Time Complexity: O(V+E). For Performing BFS
-Auxiliary Space: O(V).
-	
+		// array to store the topological order
+		int[] topo = new int[v];
 
+		// index to track position in topo array
+		int idx = 0;
 
+		// process vertices from queue
+		while (!q.isEmpty()) {
+			int node = q.poll();
 
+			// add it to the topological order
+			topo[idx++] = node;
+
+			// loop through adjecent vertices of node
+			for (int it : adjList.get(node)) {
+				// reduce the indegree of connected vertex
+				indegree[it]--;
+
+				// if indegree is 0, then add node to Queue
+				if (indegree[it] == 0) {
+					q.add(it);
+				}
+			}
+		}
+		return topo;
+	}
 }
