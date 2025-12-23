@@ -1,0 +1,68 @@
+/*
+Time Complexity: O(V+E), Each vertex and edge is processed exactly once while calculating in-degrees and during the BFS traversal.
+Space Complexity: O(V+E), We store the adjacency list, an in-degree array and a queue.
+*/
+package com.graph;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+public class DetectCycle {
+	public static void main(String[] args) {
+		// number of vertices
+		int v = 4;
+		// create a adj list
+		List<List<Integer>> adjList = new ArrayList();
+		for (int i = 0; i < v; i++) {
+			adjList.add(new ArrayList<Integer>());
+		}
+		System.out.println(adjList);
+		// add edges
+		adjList.get(0).add(1);
+		adjList.get(1).add(2);
+		adjList.get(2).add(3);
+		adjList.get(3).add(1);
+		System.out.println(adjList);
+		System.out.println(isCycle(adjList, v));
+	}
+
+	public static boolean isCycle(List<List<Integer>> adjList, int v) {
+		// create indegree array
+		int indegree[] = new int[v];
+
+		// calcualte indegree of each node
+		for (int i = 0; i < v; i++) {
+			for (int it : adjList.get(i)) {
+				indegree[it]++;
+			}
+		}
+		System.out.println(Arrays.toString(indegree));
+		// create a Queue and store nodes with indegree 0
+		Queue<Integer> q = new LinkedList();
+		for (int i = 0; i < v; i++) {
+			if (indegree[i] == 0) {
+				q.add(i);
+			}
+		}
+		// counter to track processed nodes
+		int count = 0;
+		// perfrom BFS(Khans algo)
+		while (!q.isEmpty()) {
+			int node = q.poll();
+			// increment processed nodes count
+			count++;
+			// reduce indegree of adj nodes of current node
+			for (int it : adjList.get(node)) {
+				indegree[it]--;
+				if (indegree[it] == 0) {
+					q.add(it);
+				}
+			}
+		}
+		// return true of cycle exists
+		return v != count;
+	}
+}
