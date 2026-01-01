@@ -1,0 +1,163 @@
+for all subsequense problems, we will follow either pick or not pick approach:
+
+nums = [10,9,2,5,3,7,101,18]
+
+Lonest increasing subsequens of an array:
+
+nums = [10,9,2,5,3,7,101,18]
+
+for this array, we have multiple answers:
+
+2,5,7,101---length is 4
+2,3,7,18---length is 4
+
+==========
+
+bruteforce approach is,
+lets print all subsequenses(either use power set or recursion for printing all 
+subsequenses).
+check for increasing order and store the longest one among all subsequenses.
+so TC is exponential i.e 2^n.
+
+==========
+
+nums = [10,9,2,5,3,7,101,18]
+
+trying all ways i.e using recursion.
+	->express everything in the form of index.
+	->now pick or not pick the element in that index. we also need one varible to store previous element.
+	  this will help in checking to form subsequense. 
+suppose, our first index element is 10, if we pick it then next element is 9. so we need to ingnore 9.
+because its not increasing order. so to check next elemenets with first index element 10, we need to store it
+in prev varible.intially we will take prev with -1.
+if if we have function f(3,0)->means length of LIS is starting from 3rd index,whose previous index is 0.
+	->take the max length of pick or not pick.
+
+TC is :2^n (because for every elemenet, either take or not take)
+SC is: o(n)
+
+=========
+to minmize tc, we will use DP using Memoization.
+here TC is: o(n*n)
+	SC is: o(n*n)+o(n)
+	
+
+
+
+
+
+===========
+
+Better solution is using Binary Search:
+
+1 7 8 4 5 6 -1 9
+
+	here longest subsequense is 1 4 5 6 9-->length is 5
+	
+approach:
+	we can generate increasing subsequenses for all elements
+	
+1 7	8 9			->length is 4
+1 4 5 6 9		->length is 5
+-1 9			->length is 2
+
+	so longest increasing subsequense is length of 5
+	
+	but this is not a good solution and it will take lot of space. but this is a intiution.
+
+use binary search , 
+1 7 8 4 5 6 -1 9
+
+here start forming LIS 1 7 8, now for 4 ,instead of creating new subsequense lets think where can we place 4.
+replace 7 with 4.
+
+1 4 8
+	
+next element is 5, so new sequence is 1	4 5 
+next elemenet is 6, so new sequence is 1 4 5 6
+next elemenet is -1, so new sequence is -1 4 5 6
+next elemenet is 9, so new sequence is -1 4 5 6 9
+	so length is 5. this is not subsequense .but this is the length of LIS.
+
+
+one more example:
+
+1 4 5 4 2 8
+
+1->1
+4->1 4
+5->1 4 5
+4->1 4 5
+2->2 4 5
+8->2 4 5 8
+	so length is 4
+	
+
+Algorithm
+Understanding: To find the length of the Longest Increasing Subsequence (LIS), we can use a temporary array temp that helps us track the current sequence. Initially, temp is empty.
+Step-by-Step Example: Consider the following array: nums = [1, 5, 7, 2, 3]. Let's walk through the process:
+At i = 0: The first element is 1. Since this is the first element, we add it to temp. Hence, temp = [1].
+At i = 1: The second element is 5. Since 5 is greater than the last element in temp (which is 1), we add it to the end of temp. Hence, temp = [1, 5].
+At i = 2: The third element is 7. Since 7 is greater than the last element in temp (which is 5), we add it to the end of temp. Hence, temp = [1, 5, 7].
+At i = 3: The fourth element is 2. Since 2 is not greater than 7, we need to find the correct position to place it in temp. Using binary search (lower bound), we find that 2 should replace 5. Thus, temp = [1, 2, 7].
+At i = 4: The fifth element is 3. Since 3 is not greater than 7, we again use binary search to find its position. 3 replaces 7, so temp = [1, 2, 3].
+The final temp array is [1, 2, 3], and the length of this array is 3. Thus, the length of the LIS is 3.
+Role of Binary Search: If the current number is greater than the last number in temp, it extends the LIS. If it is smaller or equal, binary search finds the smallest number in temp that is greater than or equal to the current number, ensuring temp stays minimal, which leaves room for future larger subsequences.
+Approach:
+Start by initializing an empty array temp to track the smallest possible subsequence formed so far.
+Iterate through each element in the input array.
+If the current element is greater than the last element in temp, append it to temp.
+If the current element is smaller or equal, use binary search to find the position in temp where the element should replace another element.
+The length of temp at the end gives the length of the LIS.
+
+=========
+
+package com.graph;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class LISLength {
+	public static void main(String[] args) {
+		int[] nums = { 10, 9, 2, 5, 3, 7, 101, 18 };
+		int longestLisLength = lis(nums);
+		System.out.println(longestLisLength);
+	}
+
+	public static int lis(int nums[]) {
+		int n = nums.length;
+		List<Integer> temp = new ArrayList();
+		temp.add(nums[0]);
+
+		// Iterate on the elements of the array
+		for (int i = 1; i < n; i++) {
+			// if the current element is greater than the last added elements, then add it
+			// into ans list
+			if (nums[i] > temp.get(temp.size() - 1)) {
+				temp.add(nums[i]);
+			} else {
+				// else apply binary search to find correct position and place it
+				int index = Collections.binarySearch(temp, nums[i]);
+				if (index < 0)
+					index = -(index + 1);
+				temp.set(index, nums[i]);
+			}
+		}
+
+		return temp.size();
+	}
+
+}
+
+============
+
+Complexity Analysis
+Time Complexity: O(N log N), where N is the number of elements in the input array. This is because we iterate through each element and perform a binary search on the temporary array.
+
+Space Complexity: O(N), where N is the number of elements in the input array. This is due to the temporary array used to store the longest increasing subsequence.
+
+
+
+
+
