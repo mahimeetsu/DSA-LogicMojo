@@ -21,7 +21,7 @@ class Solution {
     {
         if(currentIndex>n-1)
             return 0;
-        //incluse current house
+        //include current house
         int include=nums[currentIndex]+robRec(nums,currentIndex+2,n);
         //exlude current house
         int exlude=robRec(nums,currentIndex+1,n);
