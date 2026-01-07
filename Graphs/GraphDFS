@@ -4,6 +4,39 @@ Graph:DFS:
 it backtracks to the previous vertex to explore other unvisited paths.This continues untill all vertices from the source are visited.
 In graph,there might be loops.So we can use an extra visited array to make sure that we do not process a vertex again.
 
+steps:
+
+1.pick random node from graph.
+2.create visited array and mark that node as visited once its traversed.
+3.print that node.
+4.get neighbour nodes and perfrom above steps recursively deeply if node is unvisited.
+
+...	1------------2
+.	.			.
+.	.			.
+.	.			.
+.	.			.
+.	3------------4
+.
+5
+
+(1,2)
+(1,3)
+(2,4)
+(3,4)
+(1,5)
+
+============================
+
+
+			f(2)
+
+		f(4)		f(1)
+
+	f(1)
+
+f(3)	f(5)
+
 =========
 
 class Solution {
