@@ -44,7 +44,7 @@ class Solution {
     public ArrayList<Integer> dfs(ArrayList<ArrayList<Integer>> adj) {
         boolean[] visited=new boolean[adj.size()];
         ArrayList<Integer> res=new ArrayList<>();
-        dfsRec(adj,visited,0,res);
+        dfsRec(adj,visited,1,res);
         return res;
     }
     
