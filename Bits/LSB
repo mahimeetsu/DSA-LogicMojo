@@ -1,0 +1,28 @@
+What is LSB:
+	LSB means least significant bit is the right most bit in the binary number.
+	helps in determine number is even or odd.
+	
+even:
+		n=10
+		binary=1010
+		LSB is 0
+		its even.
+		
+odd:
+		n=7
+		binary=0111
+		LSB is 1
+		its odd.
+		
+		
+check if even or odd:
+
+if(n&1)
+	odd
+else
+	even
+	
+extracting LSB:
+
+int lsb=n&1;
+	
