@@ -38,6 +38,7 @@ public class RotateArray {
 
 class Solution {
     public void rotate(int[] nums, int k) {
+		//k is updated to k % n to handle cases where k is greater than n
         k %= nums.length;
 
         reverse(nums, 0, nums.length - 1);
@@ -55,4 +56,5 @@ class Solution {
         }
     }    
 }
+
 
