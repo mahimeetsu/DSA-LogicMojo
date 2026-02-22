@@ -8,17 +8,29 @@ public class RotateArray {
 		rotate(nums, k);
 	}
 
-	public static void rotate(int[] nums, int k) {
-		int n = nums.length - 1;
-		int temp[] = new int[k];
-		for (int i = 0; i < k; i++) {
-			temp[i] = nums[i];
+	public static void rotateArray(int a[],int k)
+	{
+		int n=a.length;
+		// Step 1: Store first k elements
+		int temp[]=new int[k];
+		for(int i=0;i<k;i++)
+		{
+			temp[i]=a[i];
 		}
 		System.out.println(Arrays.toString(temp));
-		for (int i = k+1; i < n; i++) {
-			nums[i] = nums[i];
+		//shift remaining elements to left
+		for(int i=k;i<n;i++)
+		{
+			a[i-k]=a[i];
 		}
-		System.out.println(Arrays.toString(nums));
+		System.out.println(Arrays.toString(a));
+		 // Step 3: Copy temp elements to end
+		for(int i=0;i<k;i++)
+		{
+			a[n-k+i]=temp[i];
+		}
+		System.out.println(Arrays.toString(a));
+	};
 	}
 }
 
@@ -43,3 +55,4 @@ class Solution {
         }
     }    
 }
+
