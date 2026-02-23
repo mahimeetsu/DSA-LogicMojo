@@ -1,0 +1,43 @@
+🔹 Traverse a Linked List (Java)
+
+Basic Iterative Traversal (Most Common)
+Node Structure
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+Traverse & Print
+public void traverse(Node head) {
+    Node current = head;
+
+    while (current != null) {
+        System.out.print(current.data + " ");
+        current = current.next;
+    }
+}
+
+How It Works
+
+Start from head
+Continue until current == null
+Move using current = current.next
+⏱ Time Complexity O(n)
+🧠 Space Complexity O(1) (iterative)
+
+Recursive Traversal
+
+public void traverseRecursive(Node head) {
+    if (head == null) return;
+
+    System.out.print(head.data + " ");
+    traverseRecursive(head.next);
+}
+⏱ Time Complexity O(n)
+🧠 Space Complexity O(n) (due to call stack)
+
+
