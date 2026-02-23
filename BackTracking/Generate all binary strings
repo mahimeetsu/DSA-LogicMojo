@@ -10,6 +10,55 @@ Explanation: As each position can be either 0 or 1, the total possible combinati
 Input: n = 3
 Output: [000, 001, 010, 011, 100, 101, 110, 111]
 Explanation: As each position can be either 0 or 1, the total possible combinations are 8.
+=========================================
+
+At every position:You have 2 choices.
+Put '0' 
+Put '1'
+So the recursion forms a binary tree.
+
+Visual Animation (Recursion Tree)
+Start with empty string:
+""
+Level 1 (Position 0)
+          ""
+         /    \
+       "0"    "1"
+Level 2 (Position 1)
+            ""
+         /        \
+       "0"        "1"
+      /   \       /   \
+   "00"  "01"  "10"  "11"
+Level 3 (Position 2)
+                ""
+        /                    \
+      "0"                    "1"
+     /     \               /       \
+   "00"   "01"           "10"      "11"
+   /  \     /  \         /   \      /   \
+000   001  010   011      100    101    110     111
+
+🎉 When length becomes 3 → we print.
+
+What Is Happening Internally (Stack Animation)
+
+Think in terms of:
+Add → Add → Add → Print → Remove → Add → Print → Remove → Remove...
+
+Example flow:
+""  
+"0"
+"00"
+"000"  ✔ print
+"00"
+"001"  ✔ print
+"0"
+"01"
+"010" ✔
+...
+
+Backtracking = removing last character after returning.
 
 =========
 
@@ -32,3 +81,37 @@ class Solution {
         helper(list,current+"1",n);
     }
 }
+
+
+or
+
+public class BinaryStrings {
+    public static void generate(String current, int n) {
+        // Base case
+        if (current.length() == n) {
+            System.out.println(current);
+            return;
+        }
+        // Choose '0'
+        generate(current + "0", n);
+        // Choose '1'
+        generate(current + "1", n);
+    }
+
+    public static void main(String[] args) {
+        int n = 3;
+        generate("", n);
+    }
+}
+
+
+Interview Explanation Version
+If interviewer asks how it works, say:
+"At each position, I have two choices: append '0' or '1'.
+I recursively build the string.
+When its length becomes n, I print it.
+Since every position has 2 choices, total combinations are 2ⁿ."
+
+⏱ Complexity
+Time: O(2ⁿ)
+Space (recursion stack): O(n)
